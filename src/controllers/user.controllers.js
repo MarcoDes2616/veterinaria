@@ -13,8 +13,8 @@ const getAll = catchError(async (req, res) => {
 
 //endpoint USUARIOS 1
 const create = catchError(async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  const result = await User.create({ ...req.body, password: hashedPassword });
+  
+  const result = await User.create(req.body);
 
   const tokenToVerify = jwt.sign({ result }, process.env.TOKEN_SECRET, {
     expiresIn: "24h",

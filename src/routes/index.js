@@ -4,9 +4,9 @@ const petRouter = require('./pet.routes');
 const router = express.Router();
 
 // colocar las rutas aquí
-router.use("/api/vi/users", userRouter)
+router.use("/users", userRouter)
 
-router.use("/api/v1/pets", petRouter)
+router.use("/pets", petRouter)
 
 
 module.exports = router;

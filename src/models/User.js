@@ -40,6 +40,11 @@ const User = sequelize.define('users', {
     updatedAt: false
 });
 
+User.beforeCreate(async(user) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword
+})
+
 User.prototype.toJSON = function () {
     const values = Object.assign({}, this.get());
     delete values.password;
