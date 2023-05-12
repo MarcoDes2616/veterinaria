@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendMail");
-const Pet = require("../models/Pets");
+const Pet = require("../models/Pet");
 require("dotenv").config();
 
 const getAll = catchError(async (req, res) => {
