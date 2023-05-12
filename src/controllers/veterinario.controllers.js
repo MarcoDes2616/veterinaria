@@ -16,9 +16,9 @@ const create = catchError(async(req, res) => {
     const result = await User.create({...req.body, password: hashedPassword})
     
     const tokenToVerify = jwt.sign(
-		{ result }, // payload
-		process.env.TOKEN_SECRET, // clave secreta
-		{ expiresIn: '24h' } // OPCIONAL: Tiempo en el que expira el token
+		{ result },
+		process.env.TOKEN_SECRET,
+		{ expiresIn: '24h' }
 )
     await sendEmail({
         to: result.email,

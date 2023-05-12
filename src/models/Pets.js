@@ -6,9 +6,9 @@ const Pet = sequelize.define('pets', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    birthday: {
+    birthdate: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     genre: {
         type: DataTypes.STRING,

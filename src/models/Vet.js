@@ -1,16 +1,16 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
 
-const User = sequelize.define('users', {
+const Vet = sequelize.define('vet', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    surName: {
+    firstname: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
+    lastname: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -18,29 +18,34 @@ const User = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    userImgUrl: {
+    resetCode: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    passwordChangeAt: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    profileImgUrl: {
         type: DataTypes.STRING,
         allowNull: true
     },
     status: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
-    },
-    role: {
-        type: DataTypes.STRING,
-        defaultValue: "cliente"
-    },
-    resetCode: {
-        type: DataTypes.STRING,
-        allowNull: true
     }
+}, 
+{
+    timestamps: true,
+    updatedAt: false
 });
 
 User.prototype.toJSON = function () {
     const values = Object.assign({}, this.get());
     delete values.password;
     delete values.resetCode;
+    delete values.createdAt;
     return values;
 }
 
-module.exports = User;
+module.exports = Vet;
