@@ -14,6 +14,9 @@ const Appointment = sequelize.define('appointment', {
         type: DataTypes.INTEGER,
         defaultValue: 1
     }
+},
+{
+    timestamps: true
 });
 
 module.exports = Appointment;

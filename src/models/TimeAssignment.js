@@ -5,7 +5,7 @@ const TimeAssignment = sequelize.define('time_assignment', {
     date: {
         type: DataTypes.DATEONLY,
         allowNull: false
-    },
+    }
 },
 {
     timestamps: false

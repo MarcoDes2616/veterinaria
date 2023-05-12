@@ -7,7 +7,7 @@ const Pet = sequelize.define('pets', {
         allowNull: false
     },
     birthdate: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     genre: {
@@ -23,20 +23,20 @@ const Pet = sequelize.define('pets', {
         allowNull: false
     },
     weight: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.DECIMAL,
+        allowNull: true
     },
     height: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.INTEGER,
+        allowNull: true
     },
     petImgUrl: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     status: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
 });
 

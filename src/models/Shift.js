@@ -5,7 +5,7 @@ const Shift = sequelize.define('shift', {
     name: {
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
 }, 
 {
     timestamps: false

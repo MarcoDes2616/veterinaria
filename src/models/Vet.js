@@ -40,7 +40,7 @@ const Vet = sequelize.define('vet', {
     updatedAt: false
 });
 
-User.prototype.toJSON = function () {
+Vet.prototype.toJSON = function () {
     const values = Object.assign({}, this.get());
     delete values.password;
     delete values.resetCode;

@@ -1,5 +1,6 @@
 const Appointment = require("./Appointment");
 const AppointmentStatus = require("./AppointmentStatus");
+const ClinicHistory = require("./ClinicHistory");
 const Pet = require("./Pets");
 const Shift = require("./Shift");
 const Specialty = require("./Specialty");
@@ -28,3 +29,9 @@ Appointment.belongsTo(AppointmentStatus)
 
 Vet.hasMany(Appointment)
 Appointment.belongsTo(Vet)
+
+Vet.hasMany(ClinicHistory)
+ClinicHistory.belongsTo(Vet)
+
+Pet.hasMany(ClinicHistory)
+ClinicHistory.belongsTo(Pet)

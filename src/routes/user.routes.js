@@ -7,9 +7,6 @@ const userRouter = express.Router();
 userRouter.route('/')
     .get(verifyJWT, getAll)
     .post(create);
-    
-userRouter.route("/logged")
-    .get(getMe)
 
 userRouter.route("/login")
     .post(login)
