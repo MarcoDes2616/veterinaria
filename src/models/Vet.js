@@ -40,6 +40,11 @@ const Vet = sequelize.define('vet', {
     updatedAt: false
 });
 
+Vet.beforeCreate(async(user) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword
+})
+
 Vet.prototype.toJSON = function () {
     const values = Object.assign({}, this.get());
     delete values.password;
