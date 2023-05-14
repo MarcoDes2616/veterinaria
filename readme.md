@@ -18,16 +18,14 @@ _ cancelar una cita: ver condiciones.
 9 recibir un recordatorio de cita por mail
 
 ENDPOINT PARA USUARIOS:
-1 registro **
-2 login **
-3 reset password **
-4 vista y actualizacion de perfil personal **
-5 registro de mascota **
-6 vista y actualizacion de registro de mascotas **
-7 eliminar mascota **
-8 generar una cita para su mascota: fecha, hora, veterinario, especialidad
-9 actualizar cita / reagendar
-10 cancelar cita: ver condiciones
+1 registro ***
+2 vista y actualizacion de perfil personal ***
+3 registro de mascota ***
+4 vista y actualizacion de registro de mascotas 
+5 eliminar mascota 
+6 generar una cita para su mascota: fecha, hora, veterinario, especialidad
+7 actualizar cita / reagendar
+8 cancelar cita: ver condiciones
 
 
 VETERINARIOS:
@@ -57,3 +55,20 @@ ENDPOINT PARA VETERINARIOS
 10 cancelar cita: ver condiciones
 11 generar historia clinica
 12 generar tratamientos
+
+
+ENDPOINT DEL SYSTEM
+1 login ***
+2 recuperar contraseña ***
+3 update contraseña ***
+4 verificar email ***
+5 obtener listado de usuarios ***
+6 obtener un usuario ***
+7 activar o desactivar usuarios ***
+8 obtener usuario loggeado ***
+9 obtener listado de pet ***
+10 obtener una pet por id ***
+11 ver el registro de appointment
+12 actualizar un appointment
+13 registrar un vet
+14 actualizar un vet

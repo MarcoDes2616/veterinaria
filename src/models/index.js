@@ -3,6 +3,7 @@ const AppointmentStatus = require("./AppointmentStatus");
 const ClinicHistory = require("./ClinicHistory");
 const ClinicalNote = require("./ClinicalNotes");
 const Pet = require("./Pet");
+const Role = require("./Role");
 const Shift = require("./Shift");
 const Specialty = require("./Specialty");
 const TimeAssignment = require("./TimeAssignment");
@@ -13,11 +14,17 @@ const Vet = require("./Vet");
 User.hasMany(Pet)
 Pet.belongsTo(User)
 
+Role.hasMany(User)
+User.belongsTo(Role)
+
 Shift.hasMany(TimeAssignment)
 TimeAssignment.belongsTo(Shift)
 
-Specialty.hasMany(Vet)
-Vet.belongsTo(Specialty)
+User.hasMany(Vet, {foreignKey: "userId"})
+Vet.belongsTo(User, {foreignKey: "userId"})
+
+Specialty.hasMany(Vet, {foreignKey: "specialtyId"})
+Vet.belongsTo(Specialty, {foreignKey: "specialtyId"})
 
 Vet.hasMany(TimeAssignment)
 TimeAssignment.belongsTo(Vet)

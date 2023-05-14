@@ -3,14 +3,8 @@ const Pet = require('../models/Pet');
 const User = require('../models/User');
 
 
-// ENDPOINT DEL SISTEMA
-const getAll = catchError(async(req, res) => {
-    const results = await Pet.findAll({include: [User]});
-    return res.json(results);
-});
-
-//ENDPOINT de usuarios 5
-const create = catchError(async(req, res) => {
+//ENDPOINT DE USUARIO 3 --- CREAR UN PET
+const createPet = catchError(async(req, res) => {
     const result = await Pet.create({...req.body, userId: req.user.id});
     return res.status(201).json(result);
 });
@@ -56,8 +50,8 @@ const getOne = catchError(async(req, res) => {
 
 
 module.exports = {
+    createPet,
     getAll,
-    create,
     getOne,
     remove,
     update,
