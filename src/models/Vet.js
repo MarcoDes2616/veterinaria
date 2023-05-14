@@ -7,7 +7,7 @@ const Vet = sequelize.define('vet', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    specialty: {
+    specialtyId: {
         type: DataTypes.INTEGER,
         allowNull: true
     }

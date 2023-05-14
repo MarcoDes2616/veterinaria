@@ -9,7 +9,7 @@ const createPet = catchError(async(req, res) => {
     return res.status(201).json(result);
 });
 
-//ENDPOINT de usuarios 6.1
+//ENDPOINT DE USUARIO 4 --- VISTA DE MASCOTAS
 const getPetsByUser = catchError(async(req, res) => {
     const { id } = req.params;
     const result = await Pet.findByPk(id, {where: {userId: req.user.id}});
@@ -17,8 +17,8 @@ const getPetsByUser = catchError(async(req, res) => {
     return res.json(result);
 });
 
-//ENDPOINT de usuarios 6.2
-const update = catchError(async(req, res) => {
+//ENDPOINT DE USUARIO 5 --- VISTA DE MASCOTAS
+const updatePet = catchError(async(req, res) => {
     const { id } = req.params;
     const pet = await Pet.findByPk(id)
     if(pet.userId != req.user.id) return res.status(401).json({message: Unauthorized})
@@ -30,8 +30,8 @@ const update = catchError(async(req, res) => {
     return res.json(result[1][0]);
 });
 
-//ENDPOINT de usuarios 7
-const remove = catchError(async(req, res) => {
+//ENDPOINT DE USUARIO 6 --- ELIMINAR MASCOTAS
+const removePet = catchError(async(req, res) => {
     const { id } = req.params;
     const pet = await Pet.findByPk(id)
     if(pet.userId != req.user.id) return res.status(401).json({message: Unauthorized})
@@ -51,9 +51,9 @@ const getOne = catchError(async(req, res) => {
 
 module.exports = {
     createPet,
-    getAll,
+    // getAll,
     getOne,
-    remove,
-    update,
+    removePet,
+    updatePet,
     getPetsByUser
 }

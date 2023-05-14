@@ -21,11 +21,13 @@ ENDPOINT PARA USUARIOS:
 1 registro ***
 2 vista y actualizacion de perfil personal ***
 3 registro de mascota ***
-4 vista y actualizacion de registro de mascotas 
-5 eliminar mascota 
-6 generar una cita para su mascota: fecha, hora, veterinario, especialidad
-7 actualizar cita / reagendar
-8 cancelar cita: ver condiciones
+4 vista de mascotas ***
+5 ver una mascota ***
+6 actualizacion de mascotas ***
+7 eliminar mascota ***
+8 generar una cita para su mascota: fecha, hora, veterinario, especialidad
+9 actualizar cita / reagendar
+10 cancelar cita: ver condiciones
 
 
 VETERINARIOS:
@@ -43,18 +45,15 @@ VETERINARIOS:
 12 eliminar horarios de asignacion *token
 
 ENDPOINT PARA VETERINARIOS
-1 registro **
-2 login
-3 reset password
-4 actualizacion de perfil
-5 generacion de horarios
-6 actualizar horarios de atencion
-7 eliminar horarios de atencion
-8 generar una cita de su propia atención
-9 actualizar cita / reagendar
-10 cancelar cita: ver condiciones
-11 generar historia clinica
-12 generar tratamientos
+1 actualizacion de perfil
+2 generacion de horarios
+3 actualizar horarios de atencion
+4 eliminar horarios de atencion
+5 generar una cita de su propia atención
+6 actualizar cita / reagendar
+7 cancelar cita: ver condiciones
+8 generar historia clinica
+9 generar tratamientos
 
 
 ENDPOINT DEL SYSTEM
