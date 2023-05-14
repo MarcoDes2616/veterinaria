@@ -9,10 +9,6 @@ const Appointment = sequelize.define('appointment', {
     reason: {
         type: DataTypes.TEXT,
         allowNull: true
-    },
-    appointmentStatusId: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1
     }
 },
 {

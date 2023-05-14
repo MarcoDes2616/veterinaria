@@ -1,16 +1,18 @@
-const { getAll, create, getOne, remove, update, getPetsByUser } = require('../controllers/pet.controllers');
-const express = require('express');
-const verifyJWT = require('../middleware/auth.middleware');
+const { getAll, create, getOne, remove, update, getPetsByUser} = require("../controllers/pet.controllers");
+const express = require("express");
+const verifyJWT = require("../middleware/auth.middleware");
 
 const petRouter = express.Router();
 
-petRouter.route('/')
+petRouter.route("/")
     .get(getAll)
     .post(verifyJWT, create);
 
-petRouter.route('/:id')
-    .get(verifyJWT, getPetsByUser)
+petRouter.route("/:id")
     .delete(verifyJWT, remove)
-    .put(verifyJWT, update);
+    .put(verifyJWT, update)
+    .get(getOne)
 
+petRouter.route("/:id/users")
+    .get(verifyJWT, getPetsByUser);
 module.exports = petRouter;

@@ -3,7 +3,7 @@ veterinarios
 mascotas
 
 USUARIOS:
-1 crear perfil
+1 crear perfil  **
 2 actualizar perfil *token
 3 crear mascotas *token
 4 actualizar mascotas *token
@@ -18,13 +18,13 @@ _ cancelar una cita: ver condiciones.
 9 recibir un recordatorio de cita por mail
 
 ENDPOINT PARA USUARIOS:
-1 registro
-2 login
-3 reset password
-4 vista y actualizacion de perfil actualizacion de perfil
-5 registro de mascota
-6 vista y actualizacion de registro de mascotas
-7 eliminar mascota
+1 registro **
+2 login **
+3 reset password **
+4 vista y actualizacion de perfil personal **
+5 registro de mascota **
+6 vista y actualizacion de registro de mascotas **
+7 eliminar mascota **
 8 generar una cita para su mascota: fecha, hora, veterinario, especialidad
 9 actualizar cita / reagendar
 10 cancelar cita: ver condiciones
@@ -45,7 +45,7 @@ VETERINARIOS:
 12 eliminar horarios de asignacion *token
 
 ENDPOINT PARA VETERINARIOS
-1 registro
+1 registro **
 2 login
 3 reset password
 4 actualizacion de perfil

@@ -1,11 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
+const bcrypt = require("bcrypt");
 
 const Vet = sequelize.define('vet', {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     firstname: {
         type: DataTypes.STRING,
         allowNull: false
@@ -13,6 +10,11 @@ const Vet = sequelize.define('vet', {
     lastname: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,

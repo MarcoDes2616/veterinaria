@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
+const bcrypt = require("bcrypt");
 
 const User = sequelize.define('users', {
     firstname: {
@@ -13,6 +14,7 @@ const User = sequelize.define('users', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -29,6 +31,10 @@ const User = sequelize.define('users', {
     profileImgUrl: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     status: {
         type: DataTypes.BOOLEAN,

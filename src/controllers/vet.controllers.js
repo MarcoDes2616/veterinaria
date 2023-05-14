@@ -4,10 +4,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendMail');
 const Pet = require('../models/Pets');
+const Appointment = require('../models/Appointment');
+const ClinicHistory = require('../models/ClinicHistory');
 require('dotenv').config();
 
 const getAll = catchError(async(req, res) => {
-    const results = await User.findAll({include: [Pet]});
+    const results = await User.findAll({include: [Appointment, ClinicHistory]});
     return res.json(results);
 });
 

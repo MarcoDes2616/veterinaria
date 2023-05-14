@@ -41,9 +41,10 @@ const remove = catchError(async(req, res) => {
     const { id } = req.params;
     const pet = await Pet.findByPk(id)
     if(pet.userId != req.user.id) return res.status(401).json({message: Unauthorized})
-    await Pet.destroy({ where: {id} });
+    await Pet.update({status: false}, { where: {id} });
     return res.sendStatus(204);
 });
+
 
 // ENDPOINT DEL SISTEMA
 const getOne = catchError(async(req, res) => {
