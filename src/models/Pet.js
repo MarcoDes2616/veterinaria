@@ -12,7 +12,7 @@ const Pet = sequelize.define('pets', {
     },
     genre: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     specie: {
         type: DataTypes.STRING,

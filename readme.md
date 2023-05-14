@@ -45,7 +45,8 @@ VETERINARIOS:
 12 eliminar horarios de asignacion *token
 
 ENDPOINT PARA VETERINARIOS
-1 actualizacion de perfil
+1 obtener perfil
+2 actualizacion de perfil
 2 generacion de horarios
 3 actualizar horarios de atencion
 4 eliminar horarios de atencion
@@ -67,7 +68,8 @@ ENDPOINT DEL SYSTEM
 8 obtener usuario loggeado ***
 9 obtener listado de pet ***
 10 obtener una pet por id ***
-11 ver el registro de appointment
-12 actualizar un appointment
-13 registrar un vet
+11 registro rapido de usuario y mascota ***
+13 registrar un vet 
 14 actualizar un vet
+15 ver el registro de appointment
+16 actualizar un appointment

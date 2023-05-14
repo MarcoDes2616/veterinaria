@@ -5,6 +5,9 @@ const sendEmail = require("../utils/sendMail");
 const Pet = require("../models/Pet");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
+const Vet = require("../models/Vet");
+const Specialty = require("../models/Specialty");
+const TimeAssignment = require("../models/TimeAssignment");
 
 //ENDPOINT SYSTEM 1 --- LOGIN
 const login = catchError(async (req, res) => {
@@ -74,10 +77,9 @@ const verifyEmail = catchError(async (req, res) => {
   res.json({ success: true });
 });
 
-
 // ENDPOINT DEL SISTEMA 5 --- OBTENER TODOS LOS USUARIOS
 const getAll = catchError(async (req, res) => {
-  const results = await User.findAll({ include: [Pet], where: {roleId: 3} });
+  const results = await User.findAll({ include: [Pet], where: { roleId: 3 } });
   return res.json(results);
 });
 
@@ -89,38 +91,112 @@ const getOne = catchError(async (req, res) => {
   return res.json(result);
 });
 
-
 // ENDPOINT DEL SISTEMA 7 --- ACTIVAR O DESACTIVAR USUARIOS
 const enableOrDisableUser = catchError(async (req, res) => {
-  const {id} = req.params;
-  const user = await User.findByPk(id)
+  const { id } = req.params;
+  const user = await User.findByPk(id);
   await User.update({ status: !user.status }, { where: { id } });
-  return res.status(204).json({success: true});
+  return res.status(204).json({ success: true });
 });
-
 
 // ENDPOINT DEL SISTEMA 8 --- OBTENER USUARIO LOGUEADO
 const getMe = catchError(async (req, res) => {
-  const { id } = req.user
-  const user = User.findByPk(id, { include: [Pet]})
+  const { id } = req.user;
+  const user = User.findByPk(id, { include: [Pet] });
   if (!user.status) return res.status(401).json({ message: "Unauthorized" });
   res.json(user);
 });
 
 // ENDPOINT DEL SISTEMA 9 --- OBTENER LISTADO DE PETS
-const getAllPets = catchError(async(req, res) => {
-  const results = await Pet.findAll({include: [User]});
+const getAllPets = catchError(async (req, res) => {
+  const results = await Pet.findAll({ include: [User] });
   return res.json(results);
 });
 
 // ENDPOINT DEL SISTEMA 10 --- OBTENER UN PET
-const getOnePet = catchError(async(req, res) => {
+const getOnePet = catchError(async (req, res) => {
   const { id } = req.params;
-  const result = await Pet.findByPk(id, {include: [User]});
-  if(!result) return res.sendStatus(404);
+  const result = await Pet.findByPk(id, { include: [User] });
+  if (!result) return res.sendStatus(404);
   return res.json(result);
 });
 
+// ENDPOINT DEL SISTEMA 11 --- REGISTRO RAPIDO DE USUARIO Y MASCOTA
+const registerUserPet = catchError(async (req, res) => {
+  const { firstname, lastname, email, name, specie, race, frontBaseUrl } =
+    req.body;
+  const password = require("crypto").randomBytes(10).toString("hex");
+  const user = await User.create({
+    firstname,
+    lastname,
+    email,
+    password,
+    roleId: 3,
+  });
+  await Pet.create({ name, specie, race, userId: user.id });
+  const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {
+    expiresIn: "24h",
+  });
+  await sendEmail({
+    to: user.email,
+    subject: "Verificación de Email",
+    html: `
+    <p>Su visita al centro clinico veterinario generó un registro automatico en nuestro sistema</p>
+    <p>Le damos la mas cordial bienvenida</p>
+    <a href="${frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
+    <p>Posterior a la verificacion de su email, podrá ingresar con las sigueintes credenciales</p>
+    <ul>
+      <li>Email: ${email}</li>
+      <li>Contraseña: ${password}</li>
+    </ul>
+    `,
+  });
+});
+
+// ENDPOINT DEL SISTEMA 12 --- GET SPECIALTY
+const getSpecialty = catchError( async(req, res) => {
+  const specialty = await Specialty.findAll()
+  return res.json(specialty);
+})
+
+
+// ENDPOINT DEL SISTEMA 13 --- REGISTRO RAPIDO DE VETERINARIOS
+
+const registerVet = catchError(async (req, res) => {
+  const { firstname, lastname, email, specialty } = req.body;
+  const password = require("crypto").randomBytes(10).toString("hex");
+  const user = await User.create({ firstname, lastname, email, password, roleId: 2});
+  await Vet.create({userId: user.id, specialty});
+  const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {
+    expiresIn: "24h",
+  });
+  await sendEmail({
+    to: user.email,
+    subject: "Verificación de Email",
+    html: `
+      <p>Le damos la mas cordial bienvenida</p>
+      <a href="${frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
+      <p>Posterior a la verificacion de su email, podrá ingresar con las sigueintes credenciales</p>
+      <ul>
+        <li>Email: ${email}</li>
+        <li>Contraseña: ${password}</li>
+      </ul>
+      `,
+  });
+
+  return res.status(201).json(user);
+});
+
+const getAllVet = catchError( async(req, res) => {
+  const vets = await User.findAll({
+      where: {roleId: 2}, 
+      include: {
+        model: Vet,
+        include: [Specialty, TimeAssignment]
+      }
+    })
+  res.json(vets)
+})
 
 module.exports = {
   login,
@@ -132,5 +208,9 @@ module.exports = {
   enableOrDisableUser,
   getMe,
   getAllPets,
-  getOnePet
+  getOnePet,
+  registerUserPet,
+  getSpecialty,
+  registerVet,
+  getAllVet
 };

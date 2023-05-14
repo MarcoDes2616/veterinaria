@@ -14,13 +14,13 @@ const create = catchError(async (req, res) => {
     expiresIn: "24h",
   });
   // se verificó la funcionalidad.. desactivado mientars se desarrolla
-  // await sendEmail({
-  //   to: result.email,
-  //   subject: "Verificación de Email",
-  //   html: `
-  //   <a href="${req.body.frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
-  //   `,
-  // });
+  await sendEmail({
+    to: result.email,
+    subject: "Verificación de Email",
+    html: `
+    <a href="${req.body.frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
+    `,
+  });
   return res.status(201).json(result);
 });
 

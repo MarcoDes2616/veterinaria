@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
-const bcrypt = require("bcrypt");
 
-const Vet = sequelize.define('vet', {
+const Vet = sequelize.define('vets', {
     userId: {
         type: DataTypes.INTEGER,
         allowNull: true
