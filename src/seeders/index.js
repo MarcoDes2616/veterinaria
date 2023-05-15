@@ -4,6 +4,7 @@ const Shift = require('../models/Shift');
 const Specialty = require('../models/Specialty');
 const User = require('../models/User');
 const AppointmentStatus = require('../models/AppointmentStatus');
+const Vet = require('../models/Vet');
 
 const roles = [
     {name: "admin"}, {name: "vet"}, {name: "client"}
@@ -18,8 +19,27 @@ const specialities = [{name: "Medicina interna"}, {name: "Cirugía"},
 const appointmentStatus = [{name: "active"}, {name: "completed"}, {name: "canceled"}]
 
 const users = [
-  { firstname: "Marco", lastname: 'Cardenas', email: 'john@example.com', password: "12345678", roleId: 3 }
+  { firstname: "User1", lastname: 'Cardenas', email: 'john1@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "User2", lastname: 'Cardenas', email: 'john2@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "User3", lastname: 'Cardenas', email: 'john3@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "Vet4", lastname: 'Cardenas', email: 'john4@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "Vet5", lastname: 'Cardenas', email: 'john5@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "Vet6", lastname: 'Cardenas', email: 'john6@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "Vet7", lastname: 'Cardenas', email: 'john7@example.com', 
+  password: "12345678", roleId: 3, isVerified: true },
+  { firstname: "Admin8", lastname: 'Cardenas', email: 'john8@example.com', 
+  password: "12345678", roleId: 3, isVerified: true }
 ];
+
+const vets = [
+  {userId: 4, specialtyId: 2}, {userId: 5, specialtyId: 3}, {userId: 6, specialtyId: 4}, {userId: 7, specialtyId: 5}
+]
 
 
 async function seedCreate() {
@@ -28,6 +48,7 @@ async function seedCreate() {
     await Specialty.bulkCreate(specialities)
     await User.bulkCreate(users);
     await AppointmentStatus.bulkCreate(appointmentStatus)
+    await Vet.bulkCreate(vets)
 }
 
 

@@ -164,7 +164,7 @@ const getSpecialty = catchError( async(req, res) => {
 
 // ENDPOINT DEL SISTEMA 13 --- REGISTRO RAPIDO DE VETERINARIOS
 const registerVet = catchError(async (req, res) => {
-  const { firstname, lastname, email, specialty } = req.body;
+  const { firstname, lastname, email, specialty, frontBaseUrl } = req.body;
   const password = require("crypto").randomBytes(10).toString("hex");
   const user = await User.create({ firstname, lastname, email, password, roleId: 2});
   await Vet.create({userId: user.id, specialty});
