@@ -69,7 +69,8 @@ ENDPOINT DEL SYSTEM
 9 obtener listado de pet ***
 10 obtener una pet por id ***
 11 registro rapido de usuario y mascota ***
-13 registrar un vet 
-14 actualizar un vet
-15 ver el registro de appointment
-16 actualizar un appointment
+12 obtener specialty ***
+13 registrar un vet ***
+14 obtener todos los veterinarios ***
+16 ver el registro de appointment ***
+17 nueva solicitud de verificacion de email ***

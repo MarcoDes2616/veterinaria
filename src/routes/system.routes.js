@@ -2,7 +2,9 @@ const express = require('express');
 const { login, enableOrDisableUser, getOne, resetPaswwordMail, 
         updatePassword, verifyEmail, getAll, getMe, getAllPets, 
         getOnePet, registerUserPet, registerVet, getSpecialty,
-        getAllVet } = require('../controllers/system.controllers');
+        getAllVet, 
+        requestEmailVerification,
+        getAppointment} = require('../controllers/system.controllers');
 const verifyJWT = require('../middleware/auth.middleware');
 const systemRouter = express.Router();
 
@@ -18,6 +20,9 @@ systemRouter.route("/reset_password")
 
 systemRouter.route("/reset_password/:token")
     .post(updatePassword)
+
+systemRouter.route("/verify_email")
+    .post(requestEmailVerification)
 
 systemRouter.route("/verify_email/:token")
     .get(verifyEmail)
@@ -35,6 +40,9 @@ systemRouter.route("/specialty")
 
 systemRouter.route("/pets")
     .get(getAllPets) //system, requiere middleware de roles
+    
+systemRouter.route("/appointments")
+    .get(getAppointment) //system, requiere middleware de roles
 
 systemRouter.route("/users/:id")
     .get(getOne) //system, requiere middleware de roles

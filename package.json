@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server",
+    "seed": "node src/seeders",
     "dev": "nodemon src/server",
     "test": "jest --detectOpenHandles",
     "migrate:reset": "node ./src/tests/testMigrate.js",

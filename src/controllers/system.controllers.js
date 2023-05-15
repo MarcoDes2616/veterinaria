@@ -8,6 +8,8 @@ const bcrypt = require("bcrypt");
 const Vet = require("../models/Vet");
 const Specialty = require("../models/Specialty");
 const TimeAssignment = require("../models/TimeAssignment");
+const Appointment = require("../models/Appointment");
+const { Op } = require('sequelize');
 
 //ENDPOINT SYSTEM 1 --- LOGIN
 const login = catchError(async (req, res) => {
@@ -161,7 +163,6 @@ const getSpecialty = catchError( async(req, res) => {
 
 
 // ENDPOINT DEL SISTEMA 13 --- REGISTRO RAPIDO DE VETERINARIOS
-
 const registerVet = catchError(async (req, res) => {
   const { firstname, lastname, email, specialty } = req.body;
   const password = require("crypto").randomBytes(10).toString("hex");
@@ -187,16 +188,44 @@ const registerVet = catchError(async (req, res) => {
   return res.status(201).json(user);
 });
 
+// ENDPOINT DEL SISTEMA 14 --- GET TODOS LOS VET
 const getAllVet = catchError( async(req, res) => {
   const vets = await User.findAll({
       where: {roleId: 2}, 
       include: {
         model: Vet,
-        include: [Specialty, TimeAssignment]
+        include: [Specialty, TimeAssignment, Appointment]
       }
     })
   res.json(vets)
 })
+
+
+//ENDPOINT DEL SISTEMA --- GET APPOINTMENT
+const getAppointment = catchError(async(req, res) => {
+  const result = await Appointment.findAll({
+    where: {
+      date: { [Op.gte]: new Date() }
+    }})
+  return res.json(result)
+})
+
+// ENDPOINT DEL SISTEMA 18 --- SOLICITUD PARA VERIFICAR EMAIL
+const requestEmailVerification = catchError(async (req, res) => {
+  const { email, frontBaseUrl } = req.body;
+  const user = await User.findOne({where: {email}})
+  if(!user || !user.status) return res.status(404).json({message: "user no found or inactive state"})
+  const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {
+    expiresIn: "24h",
+  });
+  await sendEmail({
+    to: result.email,
+    subject: "Verificación de Email",
+    html: `
+    <a href="${frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
+    `,
+  });
+});
 
 module.exports = {
   login,
@@ -212,5 +241,7 @@ module.exports = {
   registerUserPet,
   getSpecialty,
   registerVet,
-  getAllVet
+  getAllVet,
+  getAppointment,
+  requestEmailVerification
 };
