@@ -20,7 +20,7 @@ const Pet = sequelize.define('pets', {
     },
     race: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     weight: {
         type: DataTypes.DECIMAL,

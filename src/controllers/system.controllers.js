@@ -21,10 +21,12 @@ const login = catchError(async (req, res) => {
   if (!user.isVerified || !user.status)
     return res.status(401).json({ message: "User no verified or disabled" });
 
-  const isValid = await bcrypt.compare(password, user.password);
+  // const isValid = await bcrypt.compare(password, user.password);
+
+  const isValid = password == user.password
 
   if (!isValid) return res.status(401).json({ message: "Invalid credentials" });
-
+  
   const token = jwt.sign({ user }, process.env.TOKEN_SECRET, {
     expiresIn: "1000h",
   });
@@ -200,8 +202,20 @@ const getAllVet = catchError( async(req, res) => {
   res.json(vets)
 })
 
+//ENDPOINT DEL SISTEMA 15 --- GET APPOINTMENT
+const getOneVet = catchError(async (req, res) => {
+  const { id } = req.params;
+  const result = await User.findByPk(id, { 
+    include: {
+      model: Vet,
+      include: [Specialty, TimeAssignment, Appointment]
+    }});
+  if (!result) return res.sendStatus(404);
+  return res.json(result);
+});
 
-//ENDPOINT DEL SISTEMA --- GET APPOINTMENT
+
+//ENDPOINT DEL SISTEMA 16 --- GET APPOINTMENT
 const getAppointment = catchError(async(req, res) => {
   const result = await Appointment.findAll({
     where: {
@@ -242,6 +256,7 @@ module.exports = {
   getSpecialty,
   registerVet,
   getAllVet,
+  getOneVet,
   getAppointment,
   requestEmailVerification
 };

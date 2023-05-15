@@ -72,5 +72,6 @@ ENDPOINT DEL SYSTEM
 12 obtener specialty ***
 13 registrar un vet ***
 14 obtener todos los veterinarios ***
+15 obtener un veterinario
 16 ver el registro de appointment ***
 17 nueva solicitud de verificacion de email ***
