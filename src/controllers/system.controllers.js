@@ -15,22 +15,14 @@ const { Op } = require('sequelize');
 const login = catchError(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } }, { include: [Pet] });
-
-  if (!user) return res.status(401).json({ message: "Invalid credentials" });
-
-  if (!user.isVerified || !user.status)
-    return res.status(401).json({ message: "User no verified or disabled" });
-
+  if (!user) return res.status(404).json({ message: "user not found" });
+  if (!user.isVerified || !user.status) return res.status(401).json({ message: "User no verified or disabled" });
   // const isValid = await bcrypt.compare(password, user.password);
-
   const isValid = password == user.password
-
   if (!isValid) return res.status(401).json({ message: "Invalid credentials" });
-  
   const token = jwt.sign({ user }, process.env.TOKEN_SECRET, {
     expiresIn: "1000h",
   });
-
   res.json({ user, token });
 });
 
@@ -38,33 +30,25 @@ const login = catchError(async (req, res) => {
 const resetPaswwordMail = catchError(async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ where: { email } });
-  if (!user) {
-    return res.status(401).json({ message: "User no found" });
-  }
+  if (!user) return res.status(404).json({ message: "User no found" })
   const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {
-    expiresIn: "1h",
-  });
+    expiresIn: "1h"});
   await User.update({ resetCode: tokenToVerify }, { where: { id: user.id } });
   await sendEmail({
     to: user.email,
     subject: "Reset password",
-    html: `
-              <h3>Estas intentanto recuperar tu contraseña</h3>
-              <a href="${req.body.frontBaseUrl}/reset_password/${tokenToVerify}">Click en el enlace para reset E-mail</a>
-              `,
+    html: ` <h3>Estas intentanto recuperar tu contraseña</h3>
+            <a href="${req.body.frontBaseUrl}/reset_password/${tokenToVerify}">Click en el enlace para reset E-mail</a>`
   });
-  res.json({ success: true });
+  res.json({success: true});
 });
 
 //ENDPOINT SYSTEM 3 --- UPDATE PASSWORD
 const updatePassword = catchError(async (req, res) => {
   const { token } = req.params;
   const user = await User.findOne({ where: { resetCode: token } });
-  if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+  if (!user) return res.status(401).json({ message: "Unauthorized" })
   const data = jwt.verify(token, process.env.TOKEN_SECRET);
-
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   await User.update(
     { password: hashedPassword, resetCode: null },
@@ -155,6 +139,7 @@ const registerUserPet = catchError(async (req, res) => {
     </ul>
     `,
   });
+  return res.status(201).json({success: true})
 });
 
 // ENDPOINT DEL SISTEMA 12 --- GET SPECIALTY
@@ -170,23 +155,18 @@ const registerVet = catchError(async (req, res) => {
   const password = require("crypto").randomBytes(10).toString("hex");
   const user = await User.create({ firstname, lastname, email, password, roleId: 2});
   await Vet.create({userId: user.id, specialty});
-  const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {
-    expiresIn: "24h",
-  });
+  const tokenToVerify = jwt.sign({ user }, process.env.TOKEN_SECRET, {expiresIn: "24h"});
   await sendEmail({
     to: user.email,
     subject: "Verificación de Email",
-    html: `
-      <p>Le damos la mas cordial bienvenida</p>
+    html: ` <p>Le damos la mas cordial bienvenida</p>
       <a href="${frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
       <p>Posterior a la verificacion de su email, podrá ingresar con las sigueintes credenciales</p>
       <ul>
         <li>Email: ${email}</li>
         <li>Contraseña: ${password}</li>
       </ul>
-      `,
-  });
-
+      ` });
   return res.status(201).json(user);
 });
 
@@ -239,6 +219,7 @@ const requestEmailVerification = catchError(async (req, res) => {
     <a href="${frontBaseUrl}/verify_email/${tokenToVerify}">Click en el enlace para verificar E-mail</a>
     `,
   });
+  return res.status(201).json({success: true})
 });
 
 module.exports = {

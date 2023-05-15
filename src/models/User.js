@@ -21,7 +21,7 @@ const User = sequelize.define('users', {
         allowNull: false
     },
     resetCode: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     passwordChangeAt: {
