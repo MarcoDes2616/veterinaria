@@ -5,6 +5,7 @@ const sendEmail = require("../utils/sendMail");
 const Pet = require("../models/Pet");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
+const upload = require("../utils/multer")
 
 
 // ENDPOINT DE USUARIO 1 --- CREAR USUARIO CLIENTE
