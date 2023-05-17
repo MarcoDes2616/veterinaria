@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
 const bcrypt = require("bcrypt");
 const { getImgUrl } = require('../middleware/firebase.middleware');
+const { types } = require('pg');
 
 const User = sequelize.define('users', {
     firstname: {
@@ -52,11 +53,23 @@ User.beforeCreate(async(user) => {
     user.password = hashedPassword
 })
 
-User.beforeFindAfterExpandIncludeAll(async(user) => {
-    console.log("se ejecutó el hook");
-    const img = await getImgUrl(user.profileImgUrl)
-    console.log(`desde el hook ${img}`);
-    user.profileImgUrl = img
+User.afterFind(async(user) => {
+    console.log(user);
+    if (user.dataValues) {
+        const img = await getImgUrl(user.profileImgUrl)
+        user.profileImgUrl = img
+        // console.log(`desde el hook ${img}`);
+        return
+    }
+    const urls = user.map(async(item) => {
+        if(item.profileImgUrl){
+            const img = await getImgUrl(item.profileImgUrl)
+            item.profileImgUrl = img
+            // console.log(`desde el hook ${img}`);
+        }
+    })
+    await Promise.all(urls)
+    return user
 })
 
 User.prototype.toJSON = function () {
