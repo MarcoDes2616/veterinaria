@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendMail");
 const Pet = require("../models/Pet");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
-const upload = require("../utils/multer")
 
 
 // ENDPOINT DE USUARIO 1 --- CREAR USUARIO CLIENTE
@@ -29,10 +27,10 @@ const create = catchError(async (req, res) => {
 // ENDPOINT DE USUARIO 2 --- ACTUALIZAR USUARIO CLIENTE
 const update = catchError(async (req, res) => {
   const { id } = req.params;
-  const { password, ...rest } = req.body;
+  const { password, status, isVerified, ...rest } = req.body;
+
   const result = await User.update(
-    rest, { where: { id }, returning: true }
-    );
+    rest, { where: { id }, returning: true });
     if (result[0] === 0) return res.sendStatus(404);
     return res.json(result[1][0]);
   });

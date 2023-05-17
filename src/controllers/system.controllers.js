@@ -10,6 +10,7 @@ const Specialty = require("../models/Specialty");
 const TimeAssignment = require("../models/TimeAssignment");
 const Appointment = require("../models/Appointment");
 const { Op } = require('sequelize');
+const { getImgUrl } = require("../middleware/firebase.middleware");
 
 //ENDPOINT SYSTEM 1 --- LOGIN
 const login = catchError(async (req, res) => {
@@ -68,7 +69,15 @@ const verifyEmail = catchError(async (req, res) => {
 // ENDPOINT DEL SISTEMA 5 --- OBTENER TODOS LOS USUARIOS
 const getAll = catchError(async (req, res) => {
   const results = await User.findAll({ include: [Pet], where: { roleId: 3 } });
-  return res.json(results);
+  
+  // const promises = results.map( async(user) => {
+  //     if(user.profileImgUrl){
+  //       const img = await getImgUrl(user.profileImgUrl)
+  //       user.profileImgUrl = img
+  //     }})
+
+  // const data = await Promise.all(promises)
+  return res.json(results)
 });
 
 // ENDPOINT DEL SISTEMA 6 --- OBTENER UN USUARIO

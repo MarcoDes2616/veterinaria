@@ -11,7 +11,6 @@ const isAdmin = (req, res, next) => {
             return decoded.user;
         })
     if(data.roleId != 1) return res.sendStatus(401).json({menssage: "unauthorized"});
-    console.log(data.roleId === 1);
     next();
 }
 
