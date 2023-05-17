@@ -58,17 +58,15 @@ User.afterFind(async(user) => {
     if (user.dataValues) {
         const img = await getImgUrl(user.profileImgUrl)
         user.profileImgUrl = img
-        // console.log(`desde el hook ${img}`);
         return
     }
     const urls = user.map(async(item) => {
         if(item.profileImgUrl){
             const img = await getImgUrl(item.profileImgUrl)
             item.profileImgUrl = img
-            // console.log(`desde el hook ${img}`);
         }
     })
-    await Promise.all(urls)
+    await Promise.all(urls) // map async
     return user
 })
 
